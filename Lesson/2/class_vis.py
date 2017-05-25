@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 import pylab as pl
 import numpy as np
 
+from base64 import b64encode
+ENCODING = 'utf-8'
+
 #import numpy as np
 #import matplotlib.pyplot as plt
 #plt.ioff()
@@ -56,5 +59,8 @@ def output_image(name, format, bytes):
     data = {}
     data['name'] = name
     data['format'] = format
-    data['bytes'] = base64.encodestring(bytes)
-    print image_start+json.dumps(data)+image_end
+    #to work on python 3.6
+    base64_bytes = b64encode(bytes)
+    base64_string = base64_bytes.decode(ENCODING)
+    data['bytes'] = base64_string #base64.encodestring(bytes)
+    print(image_start + json.dumps(data) + image_end)
